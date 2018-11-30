@@ -32,11 +32,12 @@ namespace LC101Winter_School.Controllers
         // POST: Course/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Course course)
+        public ActionResult Create(Course model)
         {
             try
             {
-                courses.Add(course);
+                model.Id = courses.Count + 1;
+                courses.Add(model);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -68,21 +69,14 @@ namespace LC101Winter_School.Controllers
             }
         }
 
-        // GET: Course/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: Course/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(List<int> itemsToDelete)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                courses.RemoveAll(course => itemsToDelete.Contains(course.Id));
                 return RedirectToAction(nameof(Index));
             }
             catch

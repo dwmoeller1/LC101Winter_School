@@ -7,37 +7,47 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Subject
-            </th>
-            <th>
-                Credits
-            </th>
-            <th>
-                Instuctor
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Credits)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Instructor)
-            </td>            
-        </tr>
-}
-    </tbody>
-</table>
+<form asp-action="Create" method="get"><button type="submit" asp-action="Create">Create New"</button></form>
+<form asp-action="Delete" method="post">        
+    <br/>
+    <button type="submit" asp-action="Delete">Delete Courses</button>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Subject
+                </th>
+                <th>
+                    Credits
+                </th>
+                <th>
+                    Instuctor
+                </th>
+                <th>
+                    Select to Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Credits)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Instructor)
+                    </td>
+                    <td>
+                        <input type="checkbox" name="itemsToDelete" value="@item.Id" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
