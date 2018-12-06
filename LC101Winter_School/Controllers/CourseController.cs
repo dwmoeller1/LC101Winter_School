@@ -10,10 +10,12 @@ namespace LC101Winter_School.Controllers
 {
     public class CourseController : Controller
     {
-        private static List<Course> courses = new List<Course>();
+        private static ICourseRepository courseRepository = new CourseRepository(); 
+
         // GET: Course
         public ActionResult Index()
-        {            
+        {
+            List<Course> courses = courseRepository.GetCourses();
             return View(courses);
         }
 
@@ -36,6 +38,7 @@ namespace LC101Winter_School.Controllers
         {
             try
             {
+                List<Course> courses = courseRepository.GetCourses();
                 model.Id = courses.Count + 1;
                 courses.Add(model);
                 return RedirectToAction(nameof(Index));
@@ -76,6 +79,7 @@ namespace LC101Winter_School.Controllers
         {
             try
             {
+                List<Course> courses = courseRepository.GetCourses();
                 courses.RemoveAll(course => itemsToDelete.Contains(course.Id));
                 return RedirectToAction(nameof(Index));
             }
@@ -83,6 +87,25 @@ namespace LC101Winter_School.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public IActionResult AddStudent(int id)
+        {
+            ViewBag.course = courseRepository.GetCourse(id);
+            ViewBag.students = StudentController.studentRepository.GetStudents();
+ 
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddStudent(int id, int studentId)
+        {
+            Course course = courseRepository.GetCourse(id);
+            Student student = StudentController.studentRepository.GetStudent(studentId);
+            course.AddStudent(student);
+
+            return Redirect("Index");
         }
     }
 }
