@@ -12,81 +12,33 @@ namespace LC101Winter_School.Controllers
     {
         private static ICourseRepository courseRepository = new CourseRepository(); 
 
-        // GET: Course
         public ActionResult Index()
         {
             List<Course> courses = courseRepository.GetCourses();
             return View(courses);
         }
 
-        // GET: Course/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Course/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Course/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Course model)
         {
-            try
-            {
-                List<Course> courses = courseRepository.GetCourses();
-                model.Id = courses.Count + 1;
-                courses.Add(model);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            courseRepository.Add(model);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Course/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Course/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // POST: Course/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(List<int> itemsToDelete)
         {
-            try
-            {
-                List<Course> courses = courseRepository.GetCourses();
-                courses.RemoveAll(course => itemsToDelete.Contains(course.Id));
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            foreach (int id in itemsToDelete)
+                courseRepository.Delete(id);
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

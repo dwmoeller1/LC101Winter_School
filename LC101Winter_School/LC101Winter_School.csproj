@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Course\" />
+    <Folder Include="ViewModels\Student\" />
+  </ItemGroup>
+
 </Project>
