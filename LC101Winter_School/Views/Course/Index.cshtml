@@ -28,6 +28,7 @@
                 <th>
                     Select to Delete
                 </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -45,6 +46,9 @@
                     </td>
                     <td>
                         <input type="checkbox" name="itemsToDelete" value="@item.Id" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Add Student", "AddStudent", "Course", new { id = item.Id})
                     </td>
                 </tr>
             }

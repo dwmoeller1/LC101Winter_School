@@ -1,15 +1,21 @@
-﻿
+﻿@model LC101Winter_School.ViewModels.Course.AddStudentViewModel
 @{
-    ViewData["Title"] = "Add Studend";
+    ViewData["Title"] = "Add Student to course";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>AddStudent</h2>
+<h2>Add Student to Course @Model.CourseName (Instructor: @Model.InstructorName)</h2>
 <form method="post">
-    <select name="studentId">
-
-    </select>foreach
+    <select name="StudentId">
+        @foreach(Student student in Model.Students)
+        {
+        <option value="@student.Id">@student.LastName , @student.FirstName</option>
+        }
+    </select>
+    <select asp-for="StudentType" asp-items="Model.StudentTypes">
+    </select>
     <button type="submit">Add Student</button>
+
 </form>
 
 

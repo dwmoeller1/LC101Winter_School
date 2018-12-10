@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LC101Winter_School.Models;
+using LC101Winter_School.ViewModels.Course;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,17 +45,18 @@ namespace LC101Winter_School.Controllers
         [HttpGet]
         public IActionResult AddStudent(int id)
         {
-            ViewBag.course = courseRepository.GetCourse(id);
-            ViewBag.students = StudentController.studentRepository.GetStudents();
- 
-            return View();
+            Course course = courseRepository.GetCourse(id);
+            List<Student> students = StudentController.studentRepository.GetStudents();
+            AddStudentViewModel viewModel = new AddStudentViewModel(course.Subject, course.Instructor, students);
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult AddStudent(int id, int studentId)
+        public IActionResult AddStudent(int id, AddStudentViewModel viewModel)
         {
             Course course = courseRepository.GetCourse(id);
-            Student student = StudentController.studentRepository.GetStudent(studentId);
+            Student student = StudentController.studentRepository.GetStudent(viewModel.StudentId);
             course.AddStudent(student);
 
             return Redirect("Index");
