@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LC101Winter_School
 {
-    interface ICourseRepository
+    public interface ICourseRepository
     {
         void Add(Course course);
         void Delete(int courseId);

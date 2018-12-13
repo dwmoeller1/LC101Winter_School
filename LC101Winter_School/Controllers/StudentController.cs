@@ -9,7 +9,12 @@ namespace LC101Winter_School.Controllers
 {
     public class StudentController : Controller
     {
-        public static IStudentRepository studentRepository = new StudentRepository();
+        public IStudentRepository studentRepository;
+
+        public StudentController(IStudentRepository studentRepository)
+        {
+            this.studentRepository = studentRepository;
+        }
 
         public IActionResult Index()
         {

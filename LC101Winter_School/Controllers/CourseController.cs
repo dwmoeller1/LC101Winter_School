@@ -11,7 +11,14 @@ namespace LC101Winter_School.Controllers
 {
     public class CourseController : Controller
     {
-        private static ICourseRepository courseRepository = new CourseRepository(); 
+        private ICourseRepository courseRepository;
+        private IStudentRepository studentRepository;
+
+        public CourseController(ICourseRepository courseRepository, IStudentRepository studentRepository)
+        {
+            this.courseRepository = courseRepository;
+            this.studentRepository = studentRepository;
+        }
 
         public ActionResult Index()
         {
@@ -46,7 +53,7 @@ namespace LC101Winter_School.Controllers
         public IActionResult AddStudent(int id)
         {
             Course course = courseRepository.GetCourse(id);
-            List<Student> students = StudentController.studentRepository.GetStudents();
+            List<Student> students = studentRepository.GetStudents();
             AddStudentViewModel viewModel = new AddStudentViewModel(course.Subject, course.Instructor, students);
 
             return View(viewModel);
@@ -56,7 +63,7 @@ namespace LC101Winter_School.Controllers
         public IActionResult AddStudent(int id, AddStudentViewModel viewModel)
         {
             Course course = courseRepository.GetCourse(id);
-            Student student = StudentController.studentRepository.GetStudent(viewModel.StudentId);
+            Student student = studentRepository.GetStudent(viewModel.StudentId);
             course.AddStudent(student);
 
             return Redirect("Index");

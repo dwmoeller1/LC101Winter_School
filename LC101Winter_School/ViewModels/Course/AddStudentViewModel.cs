@@ -19,10 +19,13 @@ namespace LC101Winter_School.ViewModels.Course
         [Required]
         public int StudentId { get; set; }
 
-        public AddStudentViewModel() { }
+        public AddStudentViewModel() {
+            StudentTypes = new List<SelectListItem>();
+        }
 
         public AddStudentViewModel(string courseName, string instructorName, List<Student> students)
         {
+            StudentTypes = new List<SelectListItem>();
             CourseName = courseName;
             InstructorName = instructorName;
             Students = students;
